@@ -1,5 +1,4 @@
 import React,  {useState} from 'react';
-import './App.css';
 import Buyer from './components/Buyer';
 
 function App() {
