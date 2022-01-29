@@ -1,11 +1,11 @@
 import React from 'react';
 
-const CartItem = ({item}) => {
+const CartItem = ({item, addToCart, removeFromCart}) => {
   return <div>
       <h2>{item.title}</h2>
       <p>Price: ₹{item.price}</p>
-      <button>+</button>
-      <button>-</button>
+      <button onClick={() => addToCart(item)}>+</button>
+      <button onClick={() => removeFromCart(item.id)}>-</button>
       <img src={item.image} alt={item.title} />
   </div>;
 };

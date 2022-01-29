@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Cart from './Cart';
+import Item from './Item';
 
 function Buyer() {
     const [data, setData] = useState([]);
     const [search, setSearch] = useState("");
     const [cartOpen, setCartOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
 
     useEffect( () => {
         fetchData();
@@ -21,19 +23,46 @@ function Buyer() {
         item.title.toLowerCase().includes(search.toLowerCase())
     );
 
+    const handleAddToCart = (clickedItem) => {
+        setCartItems(prev => {
+          const isItemInCart = prev.find(item => item.id === clickedItem.id);
+    
+          if(isItemInCart){
+            return prev.map(item => (
+              item.id === clickedItem.id ?
+              { ...item, amount: item.amount + 1 }
+              : item
+            ))
+          }
+          return [...prev, { ...clickedItem, amount: 1 }];
+        })
+      };
+
+      const handleRemoveFromCart = (id) => {
+        setCartItems(prev => 
+          prev.reduce((ack, item) => {
+            if(item.id === id){
+              if (item.amount === 1) return ack;
+              return [...ack, { ...item, amount: item.amount - 1 }];
+            }
+            else {
+              return [...ack, item];
+            }
+          }, [])
+        )
+      };
+
     return <div >
         <button onClick={() => setCartOpen(true)}>Cart</button>
         {
-            cartOpen?<Cart cartItems={data} />:null
+            cartOpen?<Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />:null
         }
         <button onClick={() => setCartOpen(false)}>Close Cart</button>
         <input placeholder="search..." type="text" onChange={ e => setSearch(e.target.value)} />
         {
             filteredData.map( (item) => {
                 return <div>
-                    <h2>{item.title}</h2>
-                    <img src={item.image} alt={item.title} />
-                    <button>Add to cart</button>
+                    <Item item={item} handleAddToCart={handleAddToCart} />
                 </div>
             })
         }
