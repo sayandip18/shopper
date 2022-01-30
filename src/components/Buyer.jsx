@@ -56,9 +56,8 @@ function Buyer() {
 
     return <div >
         <button onClick={() => setCartOpen(true)}>Cart</button>
-        {
-            cartOpen?<Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />:null
-        }
+        <Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} isOpen={cartOpen} />
+        
         <button onClick={() => setCartOpen(false)}>Close Cart</button>
         <input placeholder="search..." type="text" onChange={ e => setSearch(e.target.value)} />
         <div className="items">
