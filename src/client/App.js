@@ -63,6 +63,63 @@ export default class App extends Component {
     localStorage.removeItem("user");
   };
 
+  addProduct = (product, callback) => {
+    let products = this.state.products.slice();
+    products.push(product);
+    this.setState({ products }, () => callback && callback());
+  };
+
+  addToCart = cartItem => {
+    let cart = this.state.cart;
+    if (cart[cartItem.id]) {
+      cart[cartItem.id].amount += cartItem.amount;
+    } else {
+      cart[cartItem.id] = cartItem;
+    }
+    if (cart[cartItem.id].amount > cart[cartItem.id].product.stock) {
+      cart[cartItem.id].amount = cart[cartItem.id].product.stock;
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    this.setState({ cart });
+  };
+
+  removeFromCart = cartItemId => {
+    let cart = this.state.cart;
+    delete cart[cartItemId];
+    localStorage.setItem("cart", JSON.stringify(cart));
+    this.setState({ cart });
+  };
+
+  clearCart = () => {
+    let cart = {};
+    localStorage.removeItem("cart");
+    this.setState({ cart });
+  };
+
+  checkout = () => {
+    if (!this.state.user) {
+      this.routerRef.current.history.push("/login");
+      return;
+    }
+
+    const cart = this.state.cart;
+
+    const products = this.state.products.map(p => {
+      if (cart[p.name]) {
+        p.stock = p.stock - cart[p.name].amount;
+
+        axios.put(
+          `http://localhost:3001/products/${p.id}`,
+          { ...p },
+        )
+      }
+      return p;
+    });
+
+    this.setState({ products });
+    this.clearCart();
+  };
+
   render() {
     return (
       <Context.Provider
