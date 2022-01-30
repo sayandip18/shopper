@@ -1,0 +1,4 @@
+.cartitem {
+    display: flex;
+    justify-content: space-between;
+}

@@ -3,6 +3,8 @@ import axios from 'axios';
 import Cart from './Cart';
 import Item from './Item';
 
+import './Buyer.css'
+
 function Buyer() {
     const [data, setData] = useState([]);
     const [search, setSearch] = useState("");
@@ -59,6 +61,7 @@ function Buyer() {
         }
         <button onClick={() => setCartOpen(false)}>Close Cart</button>
         <input placeholder="search..." type="text" onChange={ e => setSearch(e.target.value)} />
+        <div className="items">
         {
             filteredData.map( (item) => {
                 return <div>
@@ -66,6 +69,7 @@ function Buyer() {
                 </div>
             })
         }
+        </div>
     </div>;
 }
 

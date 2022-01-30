@@ -1,10 +1,12 @@
 import React from 'react';
 import CartItem from './CartItem';
 
+import './Cart.css';
+
 const Cart = ({cartItems, addToCart, removeFromCart}) => {
     const compute = (items) => items.reduce((prev, curr) => prev + curr.amount * curr.price, 0)
 
-    return <div>
+    return <div className="cart">
         <h1>Shopping Cart</h1>
         { cartItems.length === 0? <p>No item in cart</p> : null}
         {
