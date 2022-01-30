@@ -1,42 +1,44 @@
-import React, {useState, useContext} from 'react';
-import wrapperWithContext from '../wrapperWithContext';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import withContext from "../withContext";
 
-function Login() {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: ""
+    };
+  }
 
-  const [user] = useContext(wrapperWithContext);
+  handleChange = e => this.setState({ [e.target.name]: e.target.value, error: "" });
 
-  const handleName = e => setUserName(e.target.value);
-  const handlePass = e => setPassword(e.target.value);
-
-  const login = (e) => {
+  login = (e) => {
     e.preventDefault();
 
     const { username, password } = this.state;
     if (!username || !password) {
-      setError("Fill all fields!")
-      
+      return this.setState({ error: "Fill all fields!" });
     }
     this.props.context.login(username, password)
       .then((loggedIn) => {
         if (!loggedIn) {
-          setError("Invalid credentials!")
-          
+          this.setState({ error: "Invalid Credentails" });
         }
       })
   };
 
-  return !user? (<>
-    <div className="hero is-primary ">
+  render() {
+    return !this.props.context.user ? (
+      <>
+        <div className="hero is-primary ">
           <div className="hero-body container">
             <h4 className="title">Login</h4>
           </div>
         </div>
         <br />
         <br />
-        <form onSubmit={login}>
+        <form onSubmit={this.login}>
           <div className="columns is-mobile is-centered">
             <div className="column is-one-third">
               <div className="field">
@@ -45,7 +47,7 @@ function Login() {
                   className="input"
                   type="email"
                   name="username"
-                  onChange={handleName}
+                  onChange={this.handleChange}
                 />
               </div>
               <div className="field">
@@ -54,11 +56,11 @@ function Login() {
                   className="input"
                   type="password"
                   name="password"
-                  onChange={handlePass}
+                  onChange={this.handleChange}
                 />
               </div>
-              {error && (
-                <div className="has-text-danger">{error}</div>
+              {this.state.error && (
+                <div className="has-text-danger">{this.state.error}</div>
               )}
               <div className="field is-clearfix">
                 <button
@@ -70,7 +72,11 @@ function Login() {
             </div>
           </div>
         </form>
-    </>) : <>Logged in!!!</>;
+      </>
+    ) : (
+      <Redirect to="/products" />
+    );
+  }
 }
 
-export default wrapperWithContext(Login);
+export default withContext(Login);
