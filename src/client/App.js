@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import { Routes, Route, Link, BrowserRouter} from 'react-router-dom';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 import AddItem from './components/AddItem';
 import Cart from './components/Cart';
@@ -17,10 +19,47 @@ function App() {
 
   const routerRef = React.createRef();
 
+  useEffect(() => {
+    let user = localStorage.getItem("user");
+    user = user ? JSON.parse(user) : null;
+    setUser(user);
+  }, [])
 
+  const login = async (email, password) => {
+    const res = await axios.post(
+      'http://localhost:3001/login',
+      { email, password },
+    ).catch((res) => {
+      return { status: 401, message: 'Unauthorized' }
+    })
+
+    if(res.status === 200) {
+      const { email } = jwt_decode(res.data.accessToken)
+      const user = {
+        email,
+        token: res.data.accessToken,
+        accessLevel: email === 'admin@example.com' ? 0 : 1
+      }
+  
+      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const logout = e => {
+    e.preventDefault();
+    setUser(null);
+    localStorage.removeItem("user");
+  };
 
   return (
-    <Context.Provider>
+    <Context.Provider
+      user={user}
+      login={login}
+    >
       <BrowserRouter ref={routerRef}>
       <div className="App">
           <nav

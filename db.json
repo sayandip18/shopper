@@ -9,6 +9,11 @@
       "email": "admin@example.com",
       "password": "$2a$10$w8qB40MdYkMs3dgGGf0Pu.xxVOOzWdZ5/Nrkleo3Gqc88PF/OQhOG",
       "id": 2
+    },
+    {
+      "email": "regular@example.com",
+      "password": "password",
+      "id": 3
     }
   ],
   "products": [
