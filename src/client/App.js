@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react';
 
-import { Routes, Route, Link, BrowserRouter} from 'react-router-dom';
+import { Switch, Route, Link, BrowserRouter} from 'react-router-dom';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
@@ -133,7 +133,7 @@ export default class App extends Component {
           checkout: this.checkout
         }}
       >
-        <Router ref={this.routerRef}>
+        <BrowserRouter ref={this.routerRef}>
         <div className="App">
           <nav
             className="navbar container"
@@ -194,13 +194,11 @@ export default class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/add-item" component={AddItem} />
-              <Route exact path="/items" component={ItemList} />
+              <Route exact path="/products" component={ItemList} />
             </Switch>
           </div>
-        </Router>
+        </BrowserRouter>
       </Context.Provider>
     );
   }
-}
-
-export default App;
+};

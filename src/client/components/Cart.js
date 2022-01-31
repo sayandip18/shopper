@@ -1,5 +1,5 @@
 import React from "react";
-import withContext from "../withContext";
+import wrapperWithContext from "../wrapperWithContext";
 import CartItem from "./CartItem";
 
 const Cart = props => {
@@ -52,4 +52,4 @@ const Cart = props => {
   );
 };
 
-export default withContext(Cart);
+export default wrapperWithContext(Cart);

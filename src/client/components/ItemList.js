@@ -1,6 +1,6 @@
 import React from "react";
 import ProductItem from "./ProductItem";
-import withContext from "../withContext";
+import wrapperWithContext from "../wrapperWithContext";
 
 const ItemList = props => {
   const { products } = props.context;
@@ -36,4 +36,4 @@ const ItemList = props => {
   );
 };
 
-export default withContext(ItemList);
+export default wrapperWithContext(ItemList);

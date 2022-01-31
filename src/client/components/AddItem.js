@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import withContext from "../withContext";
+import wrapperWithContext from "../wrapperWithContext";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 
@@ -146,4 +146,4 @@ class AddItem extends Component {
   }
 }
 
-export default withContext(AddItem);
+export default wrapperWithContext(AddItem);
