@@ -17,7 +17,7 @@ json-server-auth ./db.json --port 3001
 
 If the backend is not running in Node command prompt, open Git cmd to run it.
 
-Once the backend is up and running, open Thunder Client or Hoppscotch to and perform a POST request to ` http://localhost:3001/login` endpoint provided by `json-server-auth`
+Once the backend is up and running, open Thunder Client or Hoppscotch or any API testing service to perform a POST request to ` http://localhost:3001/login` endpoint provided by `json-server-auth`
 with json data of the following format, for example,
 
 ```
