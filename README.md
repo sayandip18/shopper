@@ -29,3 +29,21 @@ with json data of the following format, for example,
 
 The request will return a JWT valid for 1 hour, which confirms the request was successful.
 Now, the user can use the following credentials to login. Else, the user will get an error.
+
+## Technologies used
+
+1. React
+2. Bulma
+
+## What I learnt doing this project
+
+1. Using Context API to manage states efficiently
+2. Bulma CSS
+3. Generating a fake backend API with `json-server`
+4. What JWT is and how it can be used for authentication
+
+## Scopes to improve the user experience
+
+1. Make the shopping cart design a drawer component.
+2. Diversifying the product items into several categories.
+3. Make the products searchable (one may use speech-to-text API for this too)
